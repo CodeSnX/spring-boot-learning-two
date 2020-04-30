@@ -12,6 +12,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
+
+/**
+ * @author xgp
+ */
 @Aspect
 @Component
 @Slf4j
@@ -24,13 +28,33 @@ public class AuthTokenAspect {
     public void doAuthToken(AuthToken authToken){
     }
 
+//    @Around(value = "doAuthToken(authToken)",argNames = "proceedingJoinPoint,authToken")
+//    public Object doAround(ProceedingJoinPoint proceedingJoinPoint, AuthToken authToken) throws Throwable{
+//        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+//        assert servletRequestAttributes != null;
+//        HttpServletRequest request = servletRequestAttributes.getRequest();
+//        //去的注解中的role_name的值
+//        String[] roleIds = authToken.role_id();
+//        if (roleIds.length <= 1){
+//            //只需要认证（登录）
+//            String id = request.getHeader("id");
+//            //如果id不为空，可以调用目标方法
+//            if (id != null){
+//                return proceedingJoinPoint.proceed();
+//            }
+//            return "请输入账号";
+//        }else {
+//            return "账号错误，无法访问";
+//        }
+//    }
+
     @Around(value = "doAuthToken(authToken)",argNames = "proceedingJoinPoint,authToken")
-    public Object doAround(ProceedingJoinPoint proceedingJoinPoint,AuthToken authToken) throws Throwable{
+    public Object doAround(ProceedingJoinPoint proceedingJoinPoint, AuthToken authToken) throws Throwable{
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         assert servletRequestAttributes != null;
         HttpServletRequest request = servletRequestAttributes.getRequest();
         //去的注解中的role_name的值
-        String[] roleNames = authToken.role_name();
+        String[] roleNames = authToken.role_id();
         if (roleNames.length <= 1){
             //只需要认证（登录）
             String id = request.getHeader("id");
@@ -52,7 +76,5 @@ public class AuthTokenAspect {
             }
             return "权限不足，无法访问";
         }
-        //取得请求头中的值
-
     }
 }

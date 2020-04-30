@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soft1851.springboot.mybatis.mapper.TJurisdictionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.soft1851.springboot.mybatis.entity.TJurisdiction">
+        <id column="j_id" property="jId" />
+        <result column="parent_id" property="parentId" />
+        <result column="j_name" property="jName" />
+        <result column="j_type" property="jType" />
+        <result column="j_icon" property="jIcon" />
+        <result column="j_path" property="jPath" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        j_id, parent_id, j_name, j_type, j_icon, j_path
+    </sql>
+
+</mapper>
